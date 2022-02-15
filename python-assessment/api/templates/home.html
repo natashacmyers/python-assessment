@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Select a Person</h1>
+ <form method="post" action="{{ url_for('home')}}" enctype="multipart/form-data">
+    <label for="id">Enter the ID of the person you wish to update</label>
+    <input type="text" name="id" value="" required>
+    <input type="submit" value="submit">
+</form>
+<div class="row center-align">
+    <a href="{{ url_for('getall_people') }}" class="btn-large blue">Get All People</a>
+</div>
+<h1>Create Person</h1>
+ <form method="post" action="{{ url_for('getall_people')}}">
+    <label for="id">Enter the ID of the person you wish to Create</label>
+    <input type="text" name="id" value="" required>
+    <label for="fname">Enter the first name of the person you wish to Create</label>
+    <input type="text" name="fname" value="" required>
+    <label for="sname">Enter the last name of the person you wish to Create</label>
+    <input type="text" name="sname" value="" required>
+    <label for="auth">Do you wish this person to be authorised?</label>
+    <select name="auth" id="auth" required>
+        <option value="yes">1</option>
+        <option value="no">0</option>
+      </select>
+    <label for="enabled">Do you wish this person to be enabled?</label>
+    <select name="enabled" id="enabled" required>
+        <option value="yes">1</option>
+        <option value="no">0</option>
+      </select>
+    <input type="submit" value="submit">
+</form>
+
+{% endblock %}

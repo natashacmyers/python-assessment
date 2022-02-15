@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>Person {{id}}</h1>
+{% for person in person %}
+<h4>First name: {{ person.firstName }}</h4>
+<h4>Surname: {{ person.lastName }}</h4>
+<h4>Enabled? {{ person.enabled }}</h4>
+<h4>Authorised?{{ person.authorised}} </h4>
+{% endfor %}
+<h3>Please enter updated details below:</h3>
+<form action="person" method="post">
+    <label for="fname">Enter the first name of the person you wish to Update</label>
+    <input type="text" name="fname" value="" required>
+    <label for="sname">Enter the last name of the person you wish to Update</label>
+    <input type="text" name="sname" value="" required>
+    <label for="auth">Do you wish this person to be authorised?</label>
+    <select name="auth" id="auth" required>
+        <option value="yes">1</option>
+        <option value="no">0</option>
+      </select>
+    <label for="enabled">Do you wish this person to be enabled?</label>
+    <select name="enabled" id="enabled" required>
+        <option value="yes">1</option>
+        <option value="no">0</option>
+      </select>
+    <input type="submit" value="Submit">
+</form>
+<div>
+    <a href="{{ url_for('delete_person', id=id) }}">Delete</a>
+</div>
+{% endblock %}
