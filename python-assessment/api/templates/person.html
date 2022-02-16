@@ -1,34 +1,50 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1>Person {{id}}</h1>
-{% for person in person %}
-<h4>First name: {{ person.firstName }}</h4>
-<h4>Surname: {{ person.lastName }}</h4>
-<h4>Enabled? {{ person.enabled }}</h4>
-<h4>Authorised?{{ person.authorised}} </h4>
-{% endfor %}
-<h3>Please enter updated details below:</h3>
-<form action="{{ url_for('get_person', id=id) }}" method="PUT">
+<div class="my-5 bg-white border rounded-0">
+  <h2 class="py-4">Person {{id}}</h2>
+  {% for person in person %}
+  <div class="row py-4">
+    <div class="col-6">
+      <h5><strong>First name:</strong> {{ person.firstName }}</h5> 
+      <h5><strong>Surname:</strong> {{ person.lastName }}</h5>
+    </div>
+    <div class="col-6">
+      <h5><strong>Enabled?</strong> {{ person.enabled }}</h5>
+      <h5><strong>Authorised?</strong> {{ person.authorised}} </h5>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h5>Want to update this person? Please enter the details below:</h5>
+<form class="px-5" action="{{ url_for('get_person', id=id) }}" method="PUT">
+  <div class="form-group">
     <label for="fname">Enter the first name of the person you wish to Update</label>
-    <input type="text" name="fname" value="" required>
+    <input class="form-control" type="text" name="fname" value="" required>
+  </div>
+  <div class="form-group">
     <label for="sname">Enter the last name of the person you wish to Update</label>
-    <input type="text" name="sname" value="" required>
+    <input class="form-control" type="text" name="sname" value="" required>
+  </div>  
+  <div class="form-group">
     <label for="auth">Do you wish this person to be authorised?</label>
-    <select name="auth" id="auth" required>
+    <select class="form-control" name="auth" id="auth" required>
         <option value="yes">1</option>
         <option value="no">0</option>
       </select>
+    </div>
+    <div class="form-group">
     <label for="enabled">Do you wish this person to be enabled?</label>
-    <select name="enabled" id="enabled" required>
+    <select class="form-control" name="enabled" id="enabled" required>
         <option value="yes">1</option>
         <option value="no">0</option>
       </select>
-    <input type="submit" value="Submit">
+    <input class="mt-2 btn btn-outline-secondary" type="submit" value="Submit">
+  </div>
 </form>
 
-<h1>Delete Person</h1>
-<form action="{{ url_for('get_person', id=id) }}" method="DELETE">
-  <input type="submit" value="Delete entry">
+<form class="px-5" action="{{ url_for('get_person', id=id) }}" method="DELETE">
+  <input class="mt-3 btn btn-outline-danger type="submit" value="Delete entry">
 </form>
 {% endblock %}

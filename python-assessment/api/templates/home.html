@@ -1,34 +1,55 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1>Select a Person</h1>
- <form method="POST" action="{{ url_for('home') }}">
-    <label for="id">Enter the ID of the person you wish to update</label>
-    <input type="text" name="id" value="" required>
-    <input type="submit" value="submit">
+
+
+<h1 class="mt-5"> Welcome to the People Database!</h1>
+
+<div></div>
+<h2 class="py-2">Select a Person</h2>
+ <form class="px-5" method="POST" action="{{ url_for('home') }}">
+   <div class="form-group">
+      <label for="id">Enter the ID of the person you wish to update</label>
+      <input class="form-control" type="text" name="id" value="" required>
+   </div>
+    <input class="btn btn-outline-secondary mt-3" type="submit" value="submit">
 </form>
+
 <div class="row center-align">
-    <a href="{{ url_for('getall_people') }}">Get All People</a>
+    <h2>View All People</h2>
+    <div class="offset-4 mx-auto col-3">
+      <a class="btn btn-outline-secondary"href="{{ url_for('getall_people') }}">Get All People</a>
+    </div>
 </div>
-<h1>Create a Person</h1>
- <form method="POST" action="{{ url_for('getall_people')}}">
+<h2>Create a Person</h2>
+ <form class="px-5" method="POST" action="{{ url_for('getall_people')}}">
+  <div class="form-group">
     <label for="id">Enter the ID of the person you wish to Create</label>
-    <input type="text" name="id" value="" required>
+    <input class="form-control" type="text" name="id" value="" required>
+  </div>
+  <div class="form-group">
     <label for="fname">Enter the first name of the person you wish to Create</label>
-    <input type="text" name="fname" value="" required>
+    <input class="form-control" type="text" name="fname" value="" required>
+  </div>
+  <div class="form-group">
     <label for="sname">Enter the last name of the person you wish to Create</label>
-    <input type="text" name="sname" value="" required>
+    <input class="form-control" type="text" name="sname" value="" required>
+  </div>
+  <div class="form-group">
     <label for="auth">Do you wish this person to be authorised?</label>
-    <select name="auth" id="auth" required>
+    <select class="form-control" name="auth" id="auth" required>
         <option value="yes">1</option>
         <option value="no">0</option>
       </select>
+  </div>  
+  <div class="form-group">
     <label for="enabled">Do you wish this person to be enabled?</label>
-    <select name="enabled" id="enabled" required>
+    <select class="form-control" name="enabled" id="enabled" required>
         <option value="yes">1</option>
         <option value="no">0</option>
       </select>
-    <input type="submit" value="submit">
+  </div>  
+  <input class="my-3 btn btn-outline-secondary" type="submit" value="submit">
 </form>
 
 {% endblock %}
