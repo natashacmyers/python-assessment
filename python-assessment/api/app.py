@@ -26,7 +26,7 @@ def dict_factory(cursor, row):
     return d
 
 # TODO - you will need to implement the other endpoints
-# GET /api/person/{id} - get person with given id                               Done
+# GET /api/person/{id} - get person with given id
 # POST /api/people - create 1 person
 # PUT /api/person/{id} - Update a person with the given id
 # DELETE /api/person/{id} - Delete a person with a given id
@@ -40,7 +40,6 @@ def home():
 
 
 @app.route("/api/people", methods=["GET", "POST"])
-
 def getall_people():
     conn = sqlite3.connect('test.db')
     conn.row_factory = dict_factory
@@ -57,9 +56,8 @@ def getall_people():
             auth = 1
         else:
             auth = 0 
-        values = [auth, enab, fname, id, sname]
-        sql = 'INSERT INTO Person (authorised, enabled, firstName, id, lastName)VALUES(?, ?, ?, ?, ?);'
-        cur.execute(sql, values)
+        person = [(id, fname, sname, auth, enab)]
+        cur.execute('INSERT INTO Person(id, firstName, lastName, authorised, enabled) VALUES(?, ?, ?, ?, ?)', person)
 
         return redirect(url_for("home"))
     all_people = cur.execute('SELECT * FROM Person;').fetchall()
@@ -67,12 +65,12 @@ def getall_people():
     return jsonify(all_people)
 
 
-@app.route("/api/people/<id>",  methods=["GET", "POST"])
+@app.route("/api/people/<id>", methods=["GET", "PUT", "DELETE"])
 def get_person(id):
     conn = sqlite3.connect('test.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-    if request.method == "POST":
+    if request.method == "PUT":
         fname = request.form["fname"]
         sname = request.form["sname"]
         if request.form["enabled"] == 'Yes':
@@ -83,27 +81,17 @@ def get_person(id):
             auth = 1
         else:
             auth = 0 
-        values = (fname, sname, auth, enab, id)
-        sql = 'UPDATE Person SET firstName = ?, lastName =?, authorised =?, enabled =? WHERE "id" = ?;'
-        cur.execute(sql, values)
+        person = [(fname, sname, auth, enab, id)]
+        cur.execute('UPDATE Person SET firstName = ?, lastName =?, authorised =?, enabled =? WHERE "id" = ?', person)
         return redirect(url_for("getall_people"))
-    values = (id,)
-    sql = 'SELECT * FROM Person WHERE "id" = ?;'
-    person = cur.execute(sql, values).fetchall()
 
+    if request.method == "DELETE":
+        cur.execute('SELECT * FROM Person WHERE "id" =' + id).fetchall()
+        return redirect(url_for("home"))
+
+    person = cur.execute('SELECT * FROM Person WHERE "id" =' + id).fetchall()
     return render_template("person.html", id=id, person=person)
 
-
-@app.route("/api/people/delete_<id>",  methods=["GET", "POST"])
-def delete_person(id):
-    conn = sqlite3.connect('test.db')
-    conn.row_factory = dict_factory
-    cur = conn.cursor()
-    values = (id,)
-    sql = 'DELETE FROM Person WHERE "id" = ?;'
-    person = cur.execute(sql, values).fetchall()
-
-    return redirect(url_for("home"))
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

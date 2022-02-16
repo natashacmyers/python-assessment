@@ -9,7 +9,7 @@
 <h4>Authorised?{{ person.authorised}} </h4>
 {% endfor %}
 <h3>Please enter updated details below:</h3>
-<form action="person" method="post">
+<form action="{{ url_for('get_person', id=id) }}" method="PUT">
     <label for="fname">Enter the first name of the person you wish to Update</label>
     <input type="text" name="fname" value="" required>
     <label for="sname">Enter the last name of the person you wish to Update</label>
@@ -26,7 +26,9 @@
       </select>
     <input type="submit" value="Submit">
 </form>
-<div>
-    <a href="{{ url_for('delete_person', id=id) }}">Delete</a>
-</div>
+
+<h1>Delete Person</h1>
+<form action="{{ url_for('get_person', id=id) }}" method="DELETE">
+  <input type="submit" value="Delete entry">
+</form>
 {% endblock %}
